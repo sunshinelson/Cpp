@@ -1,0 +1,22 @@
+	//Array m
+	jboolean isCopy;
+	jint l = env->GetArrayLength(m);
+	jdouble* srcArrayElems =
+		env->GetDoubleArrayElements(m, &isCopy);
+	int const size = sqrt(l);
+
+	//Array result
+	jdouble *res = new jdouble[l];
+	for (int ri = 0; ri < l; ri++) {
+		res[ri] = srcArrayElems[ri];
+	}
+	jdoubleArray *r = new jdoubleArray[l];
+	if (isCopy == JNI_TRUE) {
+		env->ReleaseDoubleArrayElements(*r, res, 0);
+	}
+
+	while ( k > 1)
+	{	
+		Java_Matrix_multiplyC(env, jobj, m, *r, *r, size, size, size);
+		k--;
+	}
