@@ -13,3 +13,5 @@
 *.exp
 *.sdf
 *.zip
+*.ipdb
+*.iobj

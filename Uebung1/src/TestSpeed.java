@@ -66,76 +66,25 @@ public class TestSpeed {
 	    
 	    System.out.println("Sind beide Resultate gleich? " + gleich);
 	    System.out.println();
-
-		System.out.println("-------------------------------------------------");
-		int hM1 = 2;
-		int bM1 = 2;
-		int hM2 = 6000;
-		int bM2 = 400;
-		Matrix m1 = new Matrix(hM1, bM1);
-		Matrix m2 = new Matrix(hM2, bM2);
-		
-		System.out.println("Matrix 1:");
-		for(int h1 = 0; h1 < hM1; h1++) {
-			for(int b1 = 0; b1 < bM1; b1++) {
-				System.out.print(m1.getValue(h1, b1) + " ; ");
-			}
-			System.out.println();
-		}
-		
-
-//		
-//		System.out.println("Matrix 2:");
-//		for(int h2 = 0; h2 < hM2; h2++) {
-//			for(int b2 = 0; b2 < bM2; b2++) {
-//				System.out.print(m2.getValue(h2, b2) + " ; ");
-//			}
-//			System.out.println();
-//		}
 	
-//		Matrix mr = m1.multiply(m1);
-//		System.out.println("Matrix R:");
-//		for(int hr = 0; hr < hM1; hr++) {
-//			for(int br = 0; br < bM1; br++) {
-//				System.out.print(mr.getValue(hr, br) + " ; ");
-//			}
-//			System.out.println();
-//		}
+	    //Typische Ausgabe
+//	    Zeitmessungen Aufgabe 1
+//	    Java Teil:
+//	    11265 Milisekunden.
 //
-//		System.out.println("Matrix R2:");
-//		Matrix mr2 = m1.multiplyNative(m1);
+//	    C++ Teil:
+//	    9601 Milisekunden.
 //
-//		for(int hr = 0; hr < hM1; hr++) {
-//			for(int br = 0; br < bM1; br++) {
-//				System.out.print(mr2.getValue(hr, br) + " ; ");
-//			}
-//			System.out.println();
-//		}
-//		System.out.println(mr.equals(mr2));
-		
-		Matrix m3 = m1.power(5);
-		System.out.println("Matrix pow1:");
-		for(int hr = 0; hr < hM1; hr++) {
-			for(int br = 0; br < bM1; br++) {
-				System.out.print(m3.getValue(hr, br) + " ; ");
-			}
-			System.out.println();
-		}	
-		
-
-		
-		Matrix m4 = m1.powerNative(5);
-		System.out.println("Matrix pow2:");
-		for(int hr = 0; hr < hM1; hr++) {
-			for(int br = 0; br < bM1; br++) {
-				System.out.print(m4.getValue(hr, br) + " ; ");
-			}
-			System.out.println();
-		}
-		
-		System.out.println(m3.equals(m4));
-		
-		
+//	    Sind beide Resultate gleich? ja
+//
+//	    Zeitmessungen Aufgabe 2
+//	    Java Teil:
+//	    2116 Milisekunden.
+//
+//	    C++ Teil:
+//	    1666 Milisekunden.
+//
+//	    Sind beide Resultate gleich? nein --> Annahme: es handelt sich um Rundungsfehler (diese wurden bei der AUsgabe von kleinere Matrizen auch z.T. festgestellt)
 
 	}
 
