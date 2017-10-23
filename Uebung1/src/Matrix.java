@@ -52,16 +52,16 @@ public class Matrix {
 	 */
 	public Matrix multiply(Matrix m) {
 		//Resultat
-		Matrix r = new Matrix(hoehe, m.getBreite(), 0);
+		Matrix r = new Matrix(this.hoehe, m.getBreite(), 0);
 		//Multiplikation ist nur möglich wenn Breite der 1. Matrix == Höhe der 2. ist
 		if(breite == m.getHoehe()){
 			//Matrix A (This)
 			double[][] a = this.matrix;
-			int breiteA = breite;
+			int breiteA = this.breite;
 			//Matrix B (m)
 			double[][] b = m.getMatrix();
 			//Matrix r (Result)
-			int hoeheR = hoehe;
+			int hoeheR = this.hoehe;
 			int breiteR = m.getBreite();
 			
 			for(int rh=0; rh < hoeheR; rh++) {
@@ -73,6 +73,22 @@ public class Matrix {
 					r.setValue(rh, rb, res);
 				}
 			}	
+		}
+		return r;
+	}
+	
+	/**
+	 * @param k
+	 * @return
+	 */
+	public Matrix power(int k) {
+		//Resultat
+		Matrix r = this;
+		if(this.breite == this.hoehe && k > 1) {
+			while(k > 1) {
+				r = r.multiply(this);
+				k--;
+			}
 		}
 		return r;
 	}
@@ -104,6 +120,7 @@ public class Matrix {
 	 * @return das Resultat der Multiplikation als neue Matrix
 	 */
 	public Matrix multiplyNative(Matrix m) {
+		//TODO check dim
 		double[] a = transform2To1Array(this.matrix, this.hoehe, this.breite);
 		double[] b = transform2To1Array(m.getMatrix(), m.getHoehe(), m.getBreite());
 		double[] r = new double[this.hoehe * m.getBreite()];
@@ -113,6 +130,19 @@ public class Matrix {
 		multiplyC(a, b, r, i, j, k);	
 		double[][] r2 = transform1To2Array(r, m.getBreite());
 		Matrix res = new Matrix(i, j, r2);
+		return res;
+	}
+	
+	/**
+	 * @param k
+	 * @return
+	 */
+	public Matrix powerNative(int k) {
+		//TODO check dim
+		double[] a = transform2To1Array(this.matrix, this.hoehe, this.breite);
+		powerC(a, k);
+		double[][] r = transform1To2Array(a, this.breite);
+		Matrix res = new Matrix(this.hoehe, this.breite, r);
 		return res;
 	}
 	
@@ -179,6 +209,12 @@ public class Matrix {
 	 * @param k Breite Matric a == Höhe Matrix b
 	 */
 	native void multiplyC(double[] a, double[] b, double[] r, int i, int j, int k);
+	
+	/**
+	 * @param a
+	 * @param k
+	 */
+	native void powerC(double[] a, int k);
 	
 	static {
 		System.loadLibrary("NativeMatrixFunctions");
