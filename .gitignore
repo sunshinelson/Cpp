@@ -11,3 +11,5 @@
 /.recommenders/
 *.prefs
 *.exp
+*.sdf
+*.zip

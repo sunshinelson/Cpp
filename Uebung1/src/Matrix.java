@@ -54,7 +54,7 @@ public class Matrix {
 		//Resultat
 		Matrix r = new Matrix(this.hoehe, m.getBreite(), 0);
 		//Multiplikation ist nur möglich wenn Breite der 1. Matrix == Höhe der 2. ist
-		if(breite == m.getHoehe()){
+		if(this.breite == m.getHoehe()){
 			//Matrix A (This)
 			double[][] a = this.matrix;
 			int breiteA = this.breite;
@@ -84,7 +84,7 @@ public class Matrix {
 	public Matrix power(int k) {
 		//Resultat
 		Matrix r = this;
-		if(this.breite == this.hoehe && k > 1) {
+		if(this.breite == this.hoehe && k>1) {
 			while(k > 1) {
 				r = r.multiply(this);
 				k--;
@@ -99,9 +99,9 @@ public class Matrix {
 	 */
 	public boolean equals(Matrix m) {
 		//wenn beide Matrizen nicht gleich gross sind, können sie nicht gleich sein ->Abbruch return false
-		if(hoehe == m.getHoehe() && breite == m.getBreite()) {
-			for(int h = 0; h < hoehe; h++) {
-				for(int b = 0; b < breite; b++) {
+		if(this.hoehe == m.getHoehe() && this.breite == m.getBreite()) {
+			for(int h = 0; h < this.hoehe; h++) {
+				for(int b = 0; b < this.breite; b++) {
 					//falls ein Wert nicht übereinstimmt können Matrizen nicht gleich sein -> Abbruch retur false
 					if(this.matrix[h][b] != m.getMatrix()[h][b]) {
 						return false;
@@ -120,17 +120,22 @@ public class Matrix {
 	 * @return das Resultat der Multiplikation als neue Matrix
 	 */
 	public Matrix multiplyNative(Matrix m) {
-		//TODO check dim
-		double[] a = transform2To1Array(this.matrix, this.hoehe, this.breite);
-		double[] b = transform2To1Array(m.getMatrix(), m.getHoehe(), m.getBreite());
-		double[] r = new double[this.hoehe * m.getBreite()];
-		int i = this.hoehe;
-		int j = m.getBreite();
-		int k = this.breite;
-		multiplyC(a, b, r, i, j, k);	
-		double[][] r2 = transform1To2Array(r, m.getBreite());
-		Matrix res = new Matrix(i, j, r2);
-		return res;
+		//Multiplikation ist nur möglich wenn Breite der 1. Matrix == Höhe der 2. ist
+		if(this.breite == m.getHoehe()){
+			double[] a = transform2To1Array(this.matrix, this.hoehe, this.breite);
+			double[] b = transform2To1Array(m.getMatrix(), m.getHoehe(), m.getBreite());
+			double[] r = new double[this.hoehe * m.getBreite()];
+			int i = this.hoehe;
+			int j = m.getBreite();
+			int k = this.breite;
+			multiplyC(a, b, r, i, j, k);	
+			double[][] r2 = transform1To2Array(r, m.getBreite());
+			Matrix res = new Matrix(i, j, r2);
+			return res;
+		}else {
+			Matrix res = new Matrix(this.hoehe, this.breite, 0);
+			return res;
+		}
 	}
 	
 	/**
@@ -138,12 +143,21 @@ public class Matrix {
 	 * @return
 	 */
 	public Matrix powerNative(int k) {
-		//TODO check dim
-		double[] a = transform2To1Array(this.matrix, this.hoehe, this.breite);
-		powerC(a, k);
-		double[][] r = transform1To2Array(a, this.breite);
-		Matrix res = new Matrix(this.hoehe, this.breite, r);
-		return res;
+		if(this.breite == this.hoehe && k>1) {
+			double[] a = transform2To1Array(this.matrix, this.hoehe, this.breite);
+			double[] r = transform2To1Array(this.matrix, this.hoehe, this.breite);
+			while(k > 1) {
+				multiplyC(a, r, r, this.hoehe, this.hoehe, this.hoehe);		
+				k--;
+			}
+			double[][] r2 = transform1To2Array(r, this.breite);
+			Matrix res = new Matrix(this.hoehe, this.breite, r2);
+			return res;
+		}else {
+			Matrix res = new Matrix(this.hoehe, this.breite, 0);
+			return res;
+		}
+
 	}
 	
 	private double[][] transform1To2Array(double[] a1, int step){
@@ -209,12 +223,6 @@ public class Matrix {
 	 * @param k Breite Matric a == Höhe Matrix b
 	 */
 	native void multiplyC(double[] a, double[] b, double[] r, int i, int j, int k);
-	
-	/**
-	 * @param a
-	 * @param k
-	 */
-	native void powerC(double[] a, int k);
 	
 	static {
 		System.loadLibrary("NativeMatrixFunctions");
