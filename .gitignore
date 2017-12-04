@@ -15,3 +15,10 @@
 *.zip
 *.ipdb
 *.iobj
+*.db-wal
+*.db-shm
+Uebung2IB/
+*.json
+*.res
+*.sqlite
+*.rc
