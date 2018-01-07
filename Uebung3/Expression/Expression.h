@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+
 using namespace std;
 
 struct Add {
@@ -125,26 +126,6 @@ public:
 };
 
 
-template<typename Left, typename Right = double>
-Expression<Left, Add, Right> operator+(const Left& l, const double& r) {
-	return Expression<Left, Add, Right>(l, r);
-}
-
-template<typename Left, typename Right=double>
-Expression<Left, Sub, Right> operator-(const Left& l, const double& r) {
-	return Expression<Left, Sub, Right>(l, r);
-}
-
-template<typename Left, typename Right = double>
-Expression<Left, Multiply, Right> operator*(const Left& l, const double& r) {
-	return Expression<Left, Multiply, Right>(l, r);
-}
-
-template<typename Left, typename Right = double>
-Expression<Left, Div, Right> operator/(const Left& l, const double& r) {
-	return Expression<Left, Div, Right>(l, r);
-}
-
 // Left als double
 template <typename Op, typename Right>
 class Expression<double, Op, Right> {
@@ -185,22 +166,4 @@ public:
 };
 
 
-template<typename Left = double, typename Right>
-Expression<Left, Add, Right> operator+(const double& l, const Right& r) {
-	return Expression<Left, Add, Right>(l, r);
-}
 
-template<typename Left = double, typename Right>
-Expression<Left, Sub, Right> operator-(const double& l, const Right& r) {
-	return Expression<Left, Sub, Right>(l, r);
-}
-
-template<typename Left = double, typename Right>
-Expression<Left, Multiply, Right> operator*(const double& l, const Right& r) {
-	return Expression<Left, Multiply, Right>(l, r);
-}
-
-template<typename Left = double, typename Right>
-Expression<Left, Div, Right> operator/(const double& l, const Right& r) {
-	return Expression<Left, Div, Right>(l, r);
-}

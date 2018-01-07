@@ -18,7 +18,10 @@ public:
 	Vector() {}
 
 	//Indexoperator 
-	T operator[](int i) const {
+	T& operator[](const int i){
+		return this->at(i);
+	}
+	T operator[](const int i) const {
 		return this->at(i);
 	}
 

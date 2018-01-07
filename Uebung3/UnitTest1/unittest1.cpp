@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "../Expression/Vector.h"
+#include "CustomOperator.h"
+// IMPORTANT: SampleOperators.h assumes a TCHAR enabled MFC environment
+// If this does NOT describe your project, you will need to make some
+// adjustments before you will be able to use it.
+#include "SampleOperators.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

@@ -95,8 +95,8 @@ public:
 		A = f;
 		Assert::IsTrue(e == D);
 
-		//A[1] = 0;
-		//Assert::IsFalse(e == D);
+		A[1] = 0;
+		Assert::IsFalse(e == D);
 	}
 
 	// Aufgabe 2
